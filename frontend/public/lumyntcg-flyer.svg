@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+  <title id="title">LumynTCG - La tua collezione, elevata</title>
+  <desc id="desc">Volantino pubblicitario per la piattaforma LumynTCG.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0e17"/>
+      <stop offset=".55" stop-color="#17152d"/>
+      <stop offset="1" stop-color="#101d2a"/>
+    </linearGradient>
+    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a89bff"/>
+      <stop offset="1" stop-color="#6557e8"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#8be7be"/>
+      <stop offset="1" stop-color="#4dbd91"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="35"/>
+    </filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity=".35"/>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1350" fill="url(#bg)"/>
+  <circle cx="950" cy="120" r="250" fill="#7568ed" opacity=".18" filter="url(#glow)"/>
+  <circle cx="80" cy="1040" r="220" fill="#4dbd91" opacity=".12" filter="url(#glow)"/>
+  <path d="M-40 380C260 250 410 520 690 350s380-35 470-100v190C890 530 730 470 520 600S170 510-40 610Z" fill="#ffffff" opacity=".025"/>
+
+  <g transform="translate(78 70)">
+    <rect width="118" height="118" rx="30" fill="#fff" opacity=".96"/>
+    <image href="/lumyntcg-logo.png" x="5" y="5" width="108" height="108" preserveAspectRatio="xMidYMid slice"/>
+    <text x="145" y="55" fill="#f5f4ff" font-family="Arial, sans-serif" font-size="46" font-weight="700">Lumyn<tspan fill="#8be7be">TCG</tspan></text>
+    <text x="147" y="94" fill="#9da4ba" font-family="Arial, sans-serif" font-size="19" letter-spacing="3">YOUR COLLECTION, ELEVATED</text>
+  </g>
+
+  <g transform="translate(78 285)">
+    <text fill="#f7f7fb" font-family="Arial, sans-serif" font-size="76" font-weight="800">Colleziona.</text>
+    <text y="88" fill="#f7f7fb" font-family="Arial, sans-serif" font-size="76" font-weight="800">Analizza.</text>
+    <text y="176" fill="url(#green)" font-family="Arial, sans-serif" font-size="76" font-weight="800">Cresci.</text>
+    <text y="235" fill="#b0b5c8" font-family="Arial, sans-serif" font-size="27">Tutto il tuo mondo TCG, in un’unica dashboard.</text>
+  </g>
+
+  <g transform="translate(78 640)" filter="url(#shadow)">
+    <rect width="924" height="282" rx="28" fill="#1b2030" stroke="#343b58" stroke-width="2"/>
+    <g transform="translate(42 42)">
+      <circle cx="25" cy="25" r="25" fill="#393263"/>
+      <path d="M25 12v26M12 25h26" stroke="#b3aaff" stroke-width="5" stroke-linecap="round"/>
+      <text x="70" y="34" fill="#f7f7fb" font-family="Arial, sans-serif" font-size="28" font-weight="700">Tutto ciò che ti serve</text>
+      <g transform="translate(0 88)" font-family="Arial, sans-serif" font-size="21">
+        <circle cx="8" cy="8" r="8" fill="#8be7be"/><text x="30" y="15" fill="#d5d8e5">Portfolio e valore della collezione</text>
+        <circle cx="310" cy="8" r="8" fill="#8be7be"/><text x="332" y="15" fill="#d5d8e5">Catalogo e filtri avanzati</text>
+        <circle cx="8" cy="62" r="8" fill="#8be7be"/><text x="30" y="69" fill="#d5d8e5">Trade Analyzer</text>
+        <circle cx="310" cy="62" r="8" fill="#8be7be"/><text x="332" y="69" fill="#d5d8e5">Scanner carte</text>
+        <circle cx="8" cy="116" r="8" fill="#8be7be"/><text x="30" y="123" fill="#d5d8e5">Grafici e storico prezzi</text>
+        <circle cx="310" cy="116" r="8" fill="#8be7be"/><text x="332" y="123" fill="#d5d8e5">Tema scuro e chiaro</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(78 1000)">
+    <rect width="435" height="174" rx="24" fill="#202a32" stroke="#4a806b" stroke-width="2"/>
+    <text x="30" y="48" fill="#8be7be" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="2">VERSIONE FREE</text>
+    <text x="30" y="96" fill="#fff" font-family="Arial, sans-serif" font-size="35" font-weight="800">Fino a 25 carte</text>
+    <text x="30" y="134" fill="#b9c3c8" font-family="Arial, sans-serif" font-size="19">Inizia senza costi.</text>
+  </g>
+  <g transform="translate(543 1000)">
+    <rect width="459" height="174" rx="24" fill="#292442" stroke="#7669e6" stroke-width="2"/>
+    <text x="30" y="48" fill="#bdb5ff" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="2">PREMIUM</text>
+    <text x="30" y="96" fill="#fff" font-family="Arial, sans-serif" font-size="35" font-weight="800">€6 <tspan font-size="20" font-weight="400">/ mese</tspan></text>
+    <text x="30" y="134" fill="#c2bfd7" font-family="Arial, sans-serif" font-size="19">Collezione illimitata.</text>
+  </g>
+
+  <g transform="translate(78 1240)">
+    <text fill="#8f96aa" font-family="Arial, sans-serif" font-size="18">Scopri LumynTCG</text>
+    <text y="42" fill="#f7f7fb" font-family="Arial, sans-serif" font-size="29" font-weight="700">lumyn-tcg.vercel.app</text>
+    <rect x="780" y="-14" width="222" height="70" rx="35" fill="url(#violet)"/>
+    <text x="891" y="30" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="20" font-weight="700">INIZIA ORA</text>
+  </g>
+</svg>
