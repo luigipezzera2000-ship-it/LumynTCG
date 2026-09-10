@@ -1,4 +1,9 @@
 const providerConfig = {
+  pokewallet: {
+    label: "PokéWallet",
+    configured: Boolean(process.env.POKEWALLET_API_KEY),
+    source: "pokewallet"
+  },
   tcgplayer: {
     label: "TCGPlayer",
     configured: Boolean(process.env.TCGPLAYER_CLIENT_ID && process.env.TCGPLAYER_CLIENT_SECRET),
@@ -39,6 +44,24 @@ async function tcgPlayerQuote(card) {
   return market ? { price: market, source: "tcgplayer" } : null;
 }
 
+async function pokeWalletQuote(card) {
+  const response = await fetch(`https://api.pokewallet.io/search?q=${encodeURIComponent(`${card.name} ${card.number}`)}`, {
+    headers: { "X-API-Key": process.env.POKEWALLET_API_KEY, Accept: "application/json" }
+  });
+  if (!response.ok) throw new Error(`PokéWallet search request failed (${response.status})`);
+  const payload = await response.json();
+  const matches = payload.cards || payload.data || payload.results || [];
+  const match = matches.find(item => {
+    const name = String(item.name || "").toLowerCase();
+    const number = String(item.number || item.cardNumber || "").toLowerCase();
+    return name === card.name.toLowerCase() && (!number || number === card.number.toLowerCase());
+  }) || matches.find(item => String(item.name || "").toLowerCase() === card.name.toLowerCase()) || matches[0];
+  const variants = match?.variants || [];
+  const prices = variants.flatMap(variant => variant.prices || []);
+  const market = prices.map(price => Number(price.market ?? price.mid ?? price.price)).find(value => Number.isFinite(value) && value > 0);
+  return market ? { price: market, source: "pokewallet" } : null;
+}
+
 async function cardMarketQuote(card) {
   const response = await fetch(`${process.env.CARDMARKET_API_URL.replace(/\/$/, "")}/cards?search=${encodeURIComponent(card.name)}`, {
     headers: { Authorization: `Bearer ${process.env.CARDMARKET_API_TOKEN}`, Accept: "application/json" }
@@ -51,6 +74,7 @@ async function cardMarketQuote(card) {
 }
 
 export async function quoteCard(card, provider = "demo") {
+  if (provider === "pokewallet" && providerConfig.pokewallet.configured) return pokeWalletQuote(card);
   if (provider === "tcgplayer" && providerConfig.tcgplayer.configured) return tcgPlayerQuote(card);
   if (provider === "cardmarket" && providerConfig.cardmarket.configured) return cardMarketQuote(card);
   return { price: Number(card.price), source: "demo" };

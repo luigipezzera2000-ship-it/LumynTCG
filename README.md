@@ -57,6 +57,7 @@ impostare `DATABASE_URL` e `JWT_SECRET`, quindi applicare `database/schema.sql` 
 ## Provider prezzi
 
 `POST /api/prices/refresh` accetta `{ "provider": "demo" | "tcgplayer" | "cardmarket" }`.
+Per PokéWallet configurare `POKEWALLET_API_KEY` con la chiave privata dell'account PokéWallet.
 Per TCGPlayer configurare `TCGPLAYER_CLIENT_ID` e `TCGPLAYER_CLIENT_SECRET`.
 Per CardMarket configurare `CARDMARKET_API_URL` e `CARDMARKET_API_TOKEN` secondo il proxy/API account scelto.
 Le credenziali non sono incluse nel repository; senza configurazione è disponibile solo il provider demo.

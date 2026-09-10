@@ -199,7 +199,7 @@ app.get("/api/prices/:cardId/history", async (req, res) => {
 });
 app.post("/api/prices/refresh", requireAuth, async (req, res) => {
   const provider = String(req.body?.provider || "demo").toLowerCase();
-  if (!["demo", "tcgplayer", "cardmarket"].includes(provider)) return res.status(400).json({ error: "Unsupported price provider" });
+  if (!["demo", "pokewallet", "tcgplayer", "cardmarket"].includes(provider)) return res.status(400).json({ error: "Unsupported price provider" });
   const selected = provider === "demo" ? { configured: true } : getProviderStatus().find(item => item.id === provider);
   if (!selected?.configured) return res.status(400).json({ error: `${provider} is not configured` });
   try {
