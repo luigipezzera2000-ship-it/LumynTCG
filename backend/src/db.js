@@ -23,6 +23,7 @@ export async function initializeDatabase() {
     await pool.query(schema);
     console.log("Database schema initialized");
   }
+  await pool.query("ALTER TABLE users ADD COLUMN IF NOT EXISTS is_premium BOOLEAN NOT NULL DEFAULT false");
 
   const setCount = await pool.query("SELECT COUNT(*)::int AS count FROM sets");
   if (setCount.rows[0].count === 0) {

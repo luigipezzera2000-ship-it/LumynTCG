@@ -14,6 +14,16 @@ const upload = multer({
   limits: { fileSize: 8 * 1024 * 1024 },
   fileFilter: (_req, file, callback) => callback(null, ["image/jpeg", "image/png", "image/webp"].includes(file.mimetype))
 });
+app.get("/api/billing/status", requireAuth, async (req, res) => {
+  const result = await pool.query("SELECT is_premium AS premium FROM users WHERE id = $1", [req.user.sub]);
+  if (!result.rows[0]) return res.status(404).json({ error: "User not found" });
+  res.json({ premium: result.rows[0].premium, price: 6, currency: "EUR", demo: true });
+});
+app.post("/api/billing/demo-activate", requireAuth, async (req, res) => {
+  const result = await pool.query("UPDATE users SET is_premium = true WHERE id = $1 RETURNING id, email, display_name, created_at, is_premium AS premium", [req.user.sub]);
+  if (!result.rows[0]) return res.status(404).json({ error: "User not found" });
+  res.json({ message: "Premium demo activated. No payment was made.", user: result.rows[0], premium: true });
+});
 app.use(cors({ origin: (origin, callback) => {
   if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
   return callback(new Error("Origin not allowed by CORS"));
@@ -70,7 +80,7 @@ app.post("/api/auth/login", async (req, res) => {
 });
 app.get("/api/auth/me", requireAuth, async (req, res) => {
   try {
-    const result = await pool.query("SELECT id, email, display_name, created_at FROM users WHERE id = $1", [req.user.sub]);
+    const result = await pool.query("SELECT id, email, display_name, created_at, is_premium AS premium FROM users WHERE id = $1", [req.user.sub]);
     if (!result.rows[0]) return res.status(404).json({ error: "User not found" });
     res.json({ user: result.rows[0] });
   } catch (error) {
@@ -234,6 +244,11 @@ app.post("/api/portfolio/cards", requireAuth, async (req, res) => {
   const { cardId, quantity = 1, condition = "NM", purchasePrice = null } = req.body;
   if (!cardId || !Number.isInteger(quantity) || quantity < 1) return res.status(400).json({ error: "cardId and a positive integer quantity are required" });
   try {
+    const account = await pool.query("SELECT is_premium FROM users WHERE id = $1", [req.user.sub]);
+    const count = await pool.query("SELECT COALESCE(SUM(uc.quantity), 0)::int AS total FROM user_cards uc JOIN collections c ON c.id = uc.collection_id WHERE c.user_id = $1", [req.user.sub]);
+    if (!account.rows[0]?.is_premium && count.rows[0].total + quantity > 25) {
+      return res.status(402).json({ error: "Free accounts can store up to 25 cards. Activate Premium for unlimited cards." });
+    }
     const result = await pool.query(
       `INSERT INTO user_cards (collection_id, card_id, quantity, condition, purchase_price)
        SELECT id, $2, $3, $4, $5 FROM collections WHERE user_id = $1 ORDER BY created_at LIMIT 1
