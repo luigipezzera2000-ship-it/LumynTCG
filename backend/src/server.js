@@ -4,7 +4,7 @@ import cors from "cors";
 import express from "express";
 import multer from "multer";
 import { createToken, requireAuth } from "./auth.js";
-import { checkDatabase, pool } from "./db.js";
+import { checkDatabase, initializeDatabase, pool } from "./db.js";
 import { getProviderStatus, quoteCard } from "./priceProviders.js";
 
 const app = express();
@@ -272,4 +272,9 @@ app.post("/api/trades/analyze", (req, res) => {
 });
 app.use((_req, res) => res.status(404).json({ error: "Route not found" }));
 const port = Number(process.env.PORT || 4000);
-app.listen(port, () => console.log(`LumynTCG API running on port ${port}`));
+initializeDatabase()
+  .then(() => app.listen(port, () => console.log(`LumynTCG API running on port ${port}`)))
+  .catch(error => {
+    console.error("Database initialization failed", error);
+    process.exitCode = 1;
+  });
